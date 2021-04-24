@@ -1,0 +1,56 @@
+@{
+    var receipt = (Dictionary<String, int>)ViewData["receipt"];
+    var cokeQuantity = (int)ViewData["cokeQuantity"];
+    var pepsiQuantity = (int)ViewData["pepsiQuantity"];
+    var sodaQuantity = (int)ViewData["sodaQuantity"];
+    var coke = (Items)ViewData["Coke"];
+    var pepsi = (Items)ViewData["Pepsi"];
+    var soda = (Items)ViewData["Soda"];
+    var total = (double)ViewData["total"];
+    var paid = (double)ViewData["paid"];
+
+}
+<div class="row justify-content-center">
+
+    <div class="text-center">
+        <div class="card">
+            <div class="card-body">
+                <h3>Copy of your Receipt</h3>
+                <br />
+                <h5>Order</h5>
+                @if (@cokeQuantity > 0)
+                {
+                    <p>@cokeQuantity Coke = $@coke.getCost()</p>
+                }
+                @if (@pepsiQuantity > 0)
+                {
+                    <p>@pepsiQuantity Pepsi = $@pepsi.getCost()</p>
+                }
+                @if (@sodaQuantity > 0)
+                {
+                    <p>@sodaQuantity Soda = $@soda.getCost()</p>
+                }
+                <h6>Total: $@total</h6>
+                <h6>Paid: $@paid</h6>
+                <br />
+                @if (@total == @paid)
+                {
+                    <h5>No Change Returned</h5>
+                    <br />
+                }
+                else
+                {
+                    <h5>Return</h5>
+                    @foreach (KeyValuePair<String, int> entry in @receipt)
+                    {
+                        <p>@entry.Value @entry.Key</p>
+                    }
+                }
+
+                <input type="button" value="Ok" onclick="location.href='@Url.Action("Index", "Home")'" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</div>
+
+

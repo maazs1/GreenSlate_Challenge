@@ -1,0 +1,167 @@
+﻿
+@{
+    var coke = (Items)ViewData["Coke"];
+    var pepsi = (Items)ViewData["Pepsi"];
+    var soda = (Items)ViewData["Soda"];
+
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<div class="row justify-content-center">
+    <form method="POST" asp-controller="Home" asp-action="Receipt" class="form-horizontal" enctype="multipart/form-data">
+
+        <div class="text-center">
+            <div class="card">
+                <div class="card-body">
+
+                    <h3>Coins Information</h3>
+
+                    <div class="form-group">
+
+                        <h6>Pennys</h6>
+                        <input id="penny" name="penny" type="number" min="0" onkeyup="showHint(this.value)" step="1" />
+
+                        <h6>Nickels</h6>
+                        <input id="nickel" name="nickel" type="number" min="0" step="1" />
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <h6>Dimes</h6>
+                        <input id="dime" name="dime" type="number" min="0" step="1" />
+
+                        <h6>Quarters</h6>
+                        <input id="quarter" name="quarter" type="number" min="0" step="1" />
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center">
+                    <h3>Products Information</h3>
+                </div>
+                <div class="form-group priceBox">
+                    <h6>Coke</h6>
+                    <input id="coke" name="coke" type="number" value="" class="price1" max="@coke.getQuantity()" step="1" />
+                    <p> @coke.getQuantity() drinks available. Cost=@coke.getCost() </p>
+
+                    <h6>Pepsi</h6>
+                    <input id="pepsi" name="pepsi" type="number" value="" class="price2" max="@pepsi.getQuantity()" step="1" />
+                    <p> @pepsi.getQuantity() drinks available. Cost=@pepsi.getCost() </p>
+
+                    <h6>Soda</h6>
+                    <input id="soda" name="soda" type="number" value="" class="price3" max="@soda.getQuantity()" step="1" />
+                    <p> @soda.getQuantity() drinks available. Cost=@soda.getCost() </p>
+
+                </div>
+
+                <div class="form-group">
+                    <h4>Total: <span name="total" id="total"></span></h4>
+                    <input type="hidden" name="hiddenTotal" id="hiddenTotal" value="">
+                </div>
+
+            </div>
+        </div>
+        <br>
+        <div class="form-group text-center">
+            @if (soda.getQuantity() != 0 && coke.getQuantity() != 0 && pepsi.getQuantity() != 0)
+            {
+                <input type="submit" value="Get Drinks" class="btn btn-primary" />
+            }
+
+        </div>
+
+    </form>
+
+
+    <script>
+    $(document).ready(function () {
+        var total = 0
+        $('.priceBox').on('keyup', '.price1', function () {
+            var cokeVal = parseInt($(this).val()) * @coke.getCost();
+
+            if (isNaN(cokeVal)) {
+                cokeVal = 0;
+            }
+
+            var pepsiVal = parseInt($("#pepsi").val()) * @pepsi.getCost();
+
+            if (isNaN(pepsiVal)) {
+                pepsiVal = 0;
+            }
+
+            var sodaVal = parseInt($("#soda").val()) * @soda.getCost();
+
+            if (isNaN(sodaVal)) {
+                sodaVal = 0;
+            }
+
+            total = cokeVal + sodaVal + pepsiVal;
+            $('#total').html("$" + total);
+            $('#hiddenTotal').val(total);
+        });
+
+
+        $('.priceBox').on('keyup', '.price2', function () {
+            var cokeVal = parseInt($("#coke").val()) * @coke.getCost();
+
+            if (isNaN(cokeVal)) {
+                cokeVal = 0;
+            }
+
+            var pepsiVal = parseInt($(this).val()) * @pepsi.getCost();
+
+            if (isNaN(pepsiVal)) {
+                pepsiVal = 0;
+            }
+
+            var sodaVal = parseInt($("#soda").val()) * @soda.getCost();
+
+            if (isNaN(sodaVal)) {
+                sodaVal = 0;
+            }
+
+            total = cokeVal + sodaVal + pepsiVal;
+            $('#total').html("$" + total);
+            $('#hiddenTotal').val(total);
+        });
+
+        $('.priceBox').on('keyup', '.price3', function () {
+            var cokeVal = parseInt($("#coke").val()) * @coke.getCost();
+
+            if (isNaN(cokeVal)) {
+                cokeVal = 0;
+            }
+
+            var pepsiVal = parseInt($("#pepsi").val()) * @pepsi.getCost();
+
+            if (isNaN(pepsiVal)) {
+                pepsiVal = 0;
+            }
+
+            var sodaVal = parseInt($(this).val()) * @soda.getCost();
+
+            if (isNaN(sodaVal)) {
+                sodaVal = 0;
+            }
+
+            total = cokeVal + sodaVal + pepsiVal;
+            $('#total').html("$" + total);
+            $('#hiddenTotal').val(total);
+        });
+    });
+
+    function alertFunction() {
+        alert("No items in stock")
+    }
+
+    </script>
+
+
+</div>
+
+
