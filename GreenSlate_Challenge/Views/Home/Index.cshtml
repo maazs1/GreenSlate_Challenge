@@ -68,7 +68,7 @@
         </div>
         <br>
         <div class="form-group text-center">
-            @if (soda.getQuantity() != 0 && coke.getQuantity() != 0 && pepsi.getQuantity() != 0)
+            @if (soda.getQuantity() != 0 || coke.getQuantity() != 0 || pepsi.getQuantity() != 0)
             {
                 <input type="submit" value="Get Drinks" class="btn btn-primary" />
             }
